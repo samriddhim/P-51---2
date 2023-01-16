@@ -6,6 +6,7 @@ var heart1, heart2, heart3;
 var heart1Img, heart2Img, heart3Img;
 
 var zombieGroup;
+var life = 3;
 
 
 
@@ -66,6 +67,32 @@ player = createSprite(displayWidth-1150, displayHeight-300, 50, 50);
 function draw() {
   background(0); 
 
+  if (life===3) {
+    heart1.visible = false
+    heart2.visible = false
+    heart3.visible = true
+  }
+
+  if (life===2) {
+    heart1.visible = false
+    heart2.visible = true
+    heart3.visible = false
+  }
+
+  if (life===1) {
+    heart1.visible = true
+    heart2.visible = false
+    heart3.visible = false
+  }
+
+  if (life===0) {
+    heart1.visible = false
+    heart2.visible = false
+    heart3.visible = false
+
+    player.destroy()
+  }
+
   //moving the player up and down and making the game mobile compatible using touches
 if(keyDown("UP_ARROW")||touches.length>0){
   player.y = player.y-30
@@ -98,6 +125,7 @@ if(zombieGroup.isTouching(player)){
   if(zombieGroup[i].isTouching(player)){
      //  zombieGroup[i].bounceoff();
        zombieGroup[i].destroy();
+    life = life-1
        } 
  }
 }
@@ -106,6 +134,9 @@ if(zombieGroup.isTouching(player)){
 enemy();
 
 drawSprites();
+  textSize(35)
+fill("red")
+text("Lives :"+life,displayWidth-200,displayHeight/2-240)
 }
 
 
